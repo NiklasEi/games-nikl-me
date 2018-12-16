@@ -1,2 +1,4 @@
 # Redirect default Netlify subdomain to primary domain
 http://me-nikl-games.netlify.com/* http://games.nikl.me/:splat 301!
+
+http://games.nikl.me/bot https://github.com/NiklasEi/NiklsAwesomeBot 303
