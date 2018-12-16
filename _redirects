@@ -2,4 +2,5 @@
 http://me-nikl-games.netlify.com/* https://games.nikl.me/:splat 301!
 https://me-nikl-games.netlify.com/* https://games.nikl.me/:splat 301!
 
-/bot https://github.com/NiklasEi/NiklsAwesomeBot 303
+# Redirect to source code of the bot
+/bot https://github.com/NiklasEi/NiklsAwesomeBot
