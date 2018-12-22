@@ -3,4 +3,7 @@ http://me-nikl-games.netlify.com/* https://games.nikl.me/:splat 301!
 https://me-nikl-games.netlify.com/* https://games.nikl.me/:splat 301!
 
 # Redirect to source code of the bot
-/bot https://github.com/NiklasEi/NiklsAwesomeBot
+/bot/source https://github.com/NiklasEi/NiklsAwesomeBot
+
+# Redirect to invite the telegram bot
+/bot https://t.me/NiklsAwesomeBot

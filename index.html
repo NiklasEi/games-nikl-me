@@ -1,9 +1,46 @@
-<div style="padding: 50px">
-    <p>Welcome to my HTML-5 games. You can play them directly in your browser, or via <a href="http://t.me/NiklsAwesomeBot">the telegram bot</a>.</p>
-    <br>
-    <h4>Games:</h4>
-    <ul style="list-style-type:none">
-        <li><a href="/minesweeper">Minesweeper</a></li>
-        <li><a href="/sudoku">Sudoku</a></li>
-    </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Nikl's HTML5 games</title>
+</head>
+<body>
+<div class="container">
+    <h2>Welcome to my HTML-5 games</h2>
+    <p>The games can be played here in the browser, or directly in Telegram through <a href="/bot">my bot</a>.</p>
+    <p>This website including all games is open source. You can help me improving it <a href="https://github.com/NiklasEi/me-nikl-games">on GitHub</a>.</p>
+    <div class="games">
+        <div class="row">
+            <div class="game col col-md-6 col-12">
+                <a href="/minesweeper">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <img src="assets/minesweeper.gif" class="game-background">
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <span class="game-title">Minesweeper</span>
+                            <span class="game-description">Find mines with mathematics. A number on a tile gives you the amount of mine on the surrounding fields.</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="game col col-md-6 col-12">
+                <a href="/sudoku">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <img src="assets/sudoku.gif" class="game-background">
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <span class="game-title">Sudoku</span>
+                            <span class="game-description">Place numbers in every slot. Each block has to have all number from 1-9. The same has to be true for every row and column.</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+</body>
+</html>
