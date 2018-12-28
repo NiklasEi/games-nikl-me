@@ -190,6 +190,7 @@ function lost() {
 }
 
 function won() {
+    sendHighScore();
     document.title = "You won!";
     head.innerText = "You won!";
     stopGame();
@@ -344,14 +345,16 @@ function onTouchEnd(event) {
 }
 sendHighScore();
 function sendHighScore() {
+    const score = Math.floor((numberOfBombs/time)*1000);
     // Submit highscore to Telegram
     const xmlhttp = new XMLHttpRequest();
     const url = "https://tg-bot.nikl.me/setgamescore";
     xmlhttp.open("POST", url, true);
     const data = {
-        "id_hash": getUrlParameter("player")
+        "id_hash": getUrlParameter("player"),
+        "high_score": score
     };
-    xmlhttp.send(data.toString());
+    xmlhttp.send(data.toJSON());
 }
 
 function getUrlParameter(name) {
