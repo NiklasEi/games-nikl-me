@@ -351,7 +351,7 @@ function Slot(value, hint, row, column) {
 function sendHighScore() {
     const idHash = getUrlParameter("player");
     if(!idHash) return;
-    const score = Math.round(1000.0/time);
+    const score = Math.round(100000.0/time);
     // Submit high score to Telegram
     const xmlhttp = new XMLHttpRequest();
     const url = "https://tg-bot.nikl.me/setgamescore";
