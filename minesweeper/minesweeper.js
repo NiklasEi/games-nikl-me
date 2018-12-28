@@ -342,3 +342,21 @@ function onTouchEnd(event) {
         event.preventDefault();
     }
 }
+
+function sendHighScore() {
+    // Submit highscore to Telegram
+    const xmlhttp = new XMLHttpRequest();
+    const url = "https://tg-bot.nikl.me/setgamescore";
+    xmlhttp.open("POST", url, true);
+    const data = {
+        "id_hash": getUrlParameter("player")
+    };
+    xmlhttp.send(data.toString());
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
