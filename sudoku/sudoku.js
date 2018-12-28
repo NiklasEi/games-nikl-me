@@ -85,6 +85,7 @@ function won() {
     document.title = "You won!";
     head.innerText = "You won!";
     stopGame();
+    sendHighScore();
 }
 
 function stopGame() {
@@ -345,4 +346,26 @@ function Slot(value, hint, row, column) {
             won();
         }
     };
+}
+
+function sendHighScore() {
+    const idHash = getUrlParameter("player");
+    if(!idHash) return;
+    const score = Math.round(1000.0/time);
+    // Submit high score to Telegram
+    const xmlhttp = new XMLHttpRequest();
+    const url = "https://tg-bot.nikl.me/setgamescore";
+    xmlhttp.open("POST", url, true);
+    const data = {
+        "id_hash": idHash,
+        "high_score": score
+    };
+    xmlhttp.send(JSON.stringify(data));
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
