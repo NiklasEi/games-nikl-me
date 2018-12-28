@@ -26,6 +26,8 @@ const sizePerBox = Math.min(Math.floor((canvas.width - 4*outerBorderSize) / 9), 
 const offsetLeft = Math.floor(((canvas.width - 4*outerBorderSize) - 9*sizePerBox)/2);
 const offsetTop = Math.floor(((canvas.height - 4*outerBorderSize) - 9*sizePerBox)/2);
 let running = false;
+let isWindowLoaded = false;
+let puzzle;
 
 const grid = [];
 function prepareGrid(hints) {
@@ -33,6 +35,7 @@ function prepareGrid(hints) {
         grid[row] = [3];
         for (let column = 0; column < 9; column++) {
             let hint = hints[row*9 + column];
+            console.log(hint);
             grid[row][column] = new Slot(hint, hint > 0, row, column);
             draw(grid[row][column]);
         }
@@ -40,7 +43,6 @@ function prepareGrid(hints) {
 }
 
 function draw(slot) {
-    console.log("current value: " + slot.value);
     let offsetX = (Math.floor(slot.column / 3) + 1) * outerBorderSize + offsetLeft;
     let offsetY = (Math.floor(slot.row / 3) + 1) * outerBorderSize + offsetTop;
     ctx.drawImage(slot.getImage(), slot.column * sizePerBox + offsetX, slot.row * sizePerBox + offsetY, sizePerBox, sizePerBox);
@@ -51,15 +53,33 @@ function update() {
     head.innerText = "Happy puzzling!";
 }
 
+let request = new XMLHttpRequest();
+request.onload = function() {
+    let fileContent = this.responseText;
+    let fileContentLines = fileContent.split( '\n' );
+    let randomLineIndex = Math.floor( Math.random() * fileContentLines.length );
+    puzzle = fileContentLines[ randomLineIndex ];
+    console.log("got random puzzle: ", puzzle);
+    start();
+};
+request.open( 'GET', '/assets/minesweeper/puzzles.txt', true );
+request.send();
+
 function start() {
+    console.log("start");
+    if(!puzzle || !isWindowLoaded) return;
+    console.log("Real start");
     running = true;
-    // ToDo get random line from puzzles.yml
-    let randomPuzzle = "100900300900002001328741659080103004509204800740009216070000003030826075295017068";
-    prepareGrid([...randomPuzzle]);
+    prepareGrid([...puzzle]);
     update();
     runTimer();
 }
-window.onload = start;
+window.onload = windowLoaded;
+
+function windowLoaded() {
+    isWindowLoaded = true;
+    start();
+}
 
 function won() {
     document.title = "You won!";
