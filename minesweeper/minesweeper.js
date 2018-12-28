@@ -130,7 +130,6 @@ function uncover(x, y) {
     slot.isCovered = false;
     if (leftToUncover === 1) won();
     else leftToUncover --;
-    console.log("left: " + leftToUncover);
     draw(slot.img, x, y);
     if (slot.warning === 0) {
         collectSlotsToUncover(x, y);
@@ -160,10 +159,9 @@ function uncoverArea() {
         slot.isCovered = false;
         slot.img = images[slot.warning];
         leftToUncover --;
-        console.log("left: " + leftToUncover);
         draw(slot.img, slotNum % columns, Math.floor(slotNum / columns))
     }
-    if (leftToUncover === 1) won();
+    if (leftToUncover < 1) won();
     slotsToUncover.clear();
 }
 
@@ -190,10 +188,10 @@ function lost() {
 }
 
 function won() {
-    sendHighScore();
     document.title = "You won!";
     head.innerText = "You won!";
     stopGame();
+    sendHighScore();
 }
 
 function stopGame() {
@@ -347,8 +345,8 @@ function onTouchEnd(event) {
 function sendHighScore() {
     const idHash = getUrlParameter("player");
     if(!idHash) return;
-    const score = Math.floor((numberOfBombs/time)*1000);
-    // Submit highscore to Telegram
+    const score = Math.round(numberOfBombs*1000.0/time);
+    // Submit high score to Telegram
     const xmlhttp = new XMLHttpRequest();
     const url = "https://tg-bot.nikl.me/setgamescore";
     xmlhttp.open("POST", url, true);
