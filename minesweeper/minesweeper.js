@@ -342,7 +342,7 @@ function onTouchEnd(event) {
         event.preventDefault();
     }
 }
-
+sendHighScore();
 function sendHighScore() {
     // Submit highscore to Telegram
     const xmlhttp = new XMLHttpRequest();
