@@ -354,7 +354,7 @@ function sendHighScore() {
         "id_hash": getUrlParameter("player"),
         "high_score": score
     };
-    xmlhttp.send(data.toJSON());
+    xmlhttp.send(JSON.stringify(data));
 }
 
 function getUrlParameter(name) {
