@@ -343,15 +343,17 @@ function onTouchEnd(event) {
         event.preventDefault();
     }
 }
-sendHighScore();
+
 function sendHighScore() {
+    const idHash = getUrlParameter("player");
+    if(!idHash) return;
     const score = Math.floor((numberOfBombs/time)*1000);
     // Submit highscore to Telegram
     const xmlhttp = new XMLHttpRequest();
     const url = "https://tg-bot.nikl.me/setgamescore";
     xmlhttp.open("POST", url, true);
     const data = {
-        "id_hash": getUrlParameter("player"),
+        "id_hash": idHash,
         "high_score": score
     };
     xmlhttp.send(JSON.stringify(data));
