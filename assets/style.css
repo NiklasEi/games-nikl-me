@@ -5,13 +5,13 @@ body {
                     rgba(0, 0, 0, 0.7),
                     rgba(0, 0, 0, 0.7)
             ),/* bottom, image */
-            url(assets/full-bloom.png);
+            url(full-bloom.png);
     color: white;
     font-family: "helvetica neue", sans-serif;
 }
 
 h2 {
-    margin: 5rem;
+    margin-bottom: 2rem;
 }
 
 ul {
@@ -44,6 +44,7 @@ a:link, a:hover, a:active, a:visited {
 
 .game {
     padding: 5px;
+    margin: 0 auto;
     margin-bottom: 5px;
     border: 2px solid darkblue;
     border-radius: 5px;
@@ -51,6 +52,7 @@ a:link, a:hover, a:active, a:visited {
     text-align: center;
     color: white;
     text-shadow: 0 0 5px black;
+    max-width: 400px;
 }
 
 .game-title {
@@ -59,7 +61,7 @@ a:link, a:hover, a:active, a:visited {
 }
 
 .game-description {
-    color: #000;
+    color: lightgrey;
     font-size: 1rem;
 }
 
@@ -67,4 +69,14 @@ img.game-background {
     width: 100%;
     display: flex;
     margin: 0 auto;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.games.row {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
 }
