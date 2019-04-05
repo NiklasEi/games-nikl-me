@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title id="title">Simon says</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html, body {
+            margin: 0;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+        }
+        #head {
+            height: 20px;
+            align-content: center;
+            text-align: center;
+            padding-top: 20px;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-gap: 3em;
+            flex: 2;
+            margin: 3em;
+        }
+        .tile {
+            flex: auto;
+            min-width: 50%;
+            min-height: 50%;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.07s;
+        }
+        #tile-1 {
+            background-color: darkblue;
+        }
+        #tile-2 {
+            background-color: green;
+        }
+        #tile-3 {
+            background-color: yellow;
+        }
+        #tile-4 {
+            background-color: orangered;
+        }
+        #rules {
+            align-content: center;
+            text-align: center;
+            height: 20px;
+        }
+        .clicked {
+            transform: scale(1.1);
+            border-color: gray;
+            box-shadow: 0 0 10px gray;
+        }
+        kbd {
+            display: block;
+            font-size: 5rem;
+        }
+    </style>
+</head>
+<body>
+<div style="background-color: aqua">
+    <p id="head">Round: 1</p>
+    <p id="rules">Press space to start a round</p>
+</div>
+<div id="grid">
+    <div data-key="81" class="tile" id="tile-3" onclick="onClick(this)">
+        <kbd>Q</kbd>
+    </div>
+    <div data-key="87" class="tile" id="tile-4" onclick="onClick(this)">
+        <kbd>W</kbd>
+    </div>
+    <div data-key="65" class="tile" id="tile-1" onclick="onClick(this)">
+        <kbd>A</kbd>
+    </div>
+    <div data-key="83" class="tile" id="tile-2" onclick="onClick(this)">
+        <kbd>S</kbd>
+    </div>
+</div>
+
+<audio data-key="65" src="sounds/boom.wav" preload="auto">
+    Your browser does not support the audio element.
+</audio>
+<audio data-key="83" src="sounds/clap.wav" preload="auto"></audio>
+<audio data-key="81" src="sounds/hihat.wav" preload="auto"></audio>
+<audio data-key="87" src="sounds/kick.wav" preload="auto"></audio>
+<script src="/simon_says/simon.js"></script>
+</body>
+</html>
