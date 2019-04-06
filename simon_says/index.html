@@ -25,7 +25,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            grid-gap: 3em;
+            grid-gap: 2em;
             flex: 2;
             margin: 3em;
         }
@@ -68,19 +68,19 @@
 <body>
 <div style="background-color: aqua">
     <p id="head">Round: 1</p>
-    <p id="rules">Press space to start a round</p>
+    <p id="rules"></p>
 </div>
 <div id="grid">
-    <div data-key="81" class="tile" id="tile-3" onclick="onClick(this)">
+    <div data-key="81" data-tile="1" class="tile" id="tile-1" onclick="onClick(this)">
         <kbd>Q</kbd>
     </div>
-    <div data-key="87" class="tile" id="tile-4" onclick="onClick(this)">
+    <div data-key="87" data-tile="2" class="tile" id="tile-2" onclick="onClick(this)">
         <kbd>W</kbd>
     </div>
-    <div data-key="65" class="tile" id="tile-1" onclick="onClick(this)">
+    <div data-key="65" data-tile="3" class="tile" id="tile-3" onclick="onClick(this)">
         <kbd>A</kbd>
     </div>
-    <div data-key="83" class="tile" id="tile-2" onclick="onClick(this)">
+    <div data-key="83" data-tile="4" class="tile" id="tile-4" onclick="onClick(this)">
         <kbd>S</kbd>
     </div>
 </div>
