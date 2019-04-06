@@ -1,6 +1,6 @@
 function keyDown(e) {
     if(e.keyCode === 32) {
-        if(awaitInput && (currentTile =! currentTiles.length)) return;
+        if(roundRunning || (awaitInput && (currentTile !== currentTiles.length))) return;
         startRound();
         return;
     }
