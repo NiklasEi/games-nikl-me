@@ -1,17 +1,37 @@
+let roundRunning = false;
+let awaitInput = false;
+let ignoreInput = false;
+let currentRound = 1;
+let currentTile = 0;
+let currentTiles = [];
+
+const tiles = document.querySelectorAll('.tile');
+const head = document.getElementById("head");
+const rules = document.getElementById("rules");
+
+function start() {
+    tiles.forEach(tile => {
+        tile.addEventListener('transitionend', removeTransition, false);
+        tile.addEventListener('click', clickTile, false);
+        tile.addEventListener('touchend', clickTile, false);
+    });
+    window.addEventListener('keydown', keyDown, false);
+    window.addEventListener('click', startRound, false);
+    window.addEventListener('touchend', startRound, false)
+    head.innerText = "Round: " + currentRound;
+    rules.innerText = "Click to start";
+}
+window.onload = start;
+
 function keyDown(e) {
-    if(e.keyCode === 32) {
-        if(roundRunning || (awaitInput && (currentTile !== currentTiles.length))) return;
-        startRound();
-        return;
-    }
     const tile = document.querySelector(`.tile[data-key="${e.keyCode}"]`);
     if(!tile) return;
-    onClick(tile);
+    clickTile.call(tile);
 }
 
-function onClick(element) {
-    if(!awaitInput) return;
-    activateTile(element);
+function clickTile() {
+    if(!awaitInput || ignoreInput) return;
+    activateTile(this);
 }
 
 function activateTile(element) {
@@ -24,10 +44,18 @@ function activateTile(element) {
         }
         currentTile++;
         if(currentTile === currentTiles.length) {
-            nextRound();
-            rules.innerText = "Press space to start the round";
             awaitInput = false;
-            currentTile = 0;
+            rules.innerText = "Good job!";
+            ignoreInput = true;
+            setTimeout(
+                () => {
+                    nextRound();
+                    rules.innerText = "Click to start the round";
+                    currentTile = 0;
+                    ignoreInput = false;
+                },
+                2000
+            )
         }
     }
     playSound(element.dataset.key)
@@ -46,7 +74,8 @@ function playSound(dataKey) {
 function lost() {
     rules.innerText = "Lost in round " + currentRound;
     // block any further actions
-    roundRunning = true;
+    ignoreInput = true;
+    roundRunning = false;
     awaitInput = false;
 }
 
@@ -55,9 +84,8 @@ function removeTransition(e) {
     this.classList.remove('clicked');
 }
 
-let roundRunning = false;
 function startRound() {
-    if(roundRunning) return;
+    if(roundRunning || awaitInput || ignoreInput) return;
     rules.innerText = "Remember the pattern";
     roundRunning = true;
     nextTile();
@@ -68,10 +96,6 @@ function nextRound() {
     head.innerText = "Round: " + currentRound;
 }
 
-let awaitInput = false;
-let currentRound = 1;
-let currentTile = 0;
-let currentTiles = [];
 function nextTile() {
     let tileNr;
     if(currentTile === currentTiles.length) {
@@ -92,16 +116,3 @@ function nextTile() {
     }
     setTimeout(nextTile, 1000);
 }
-
-const tiles = document.querySelectorAll('.tile');
-tiles.forEach(tile => tile.addEventListener('transitionend', removeTransition));
-
-const head = document.getElementById("head");
-const rules = document.getElementById("rules");
-
-function start() {
-    window.addEventListener('keydown', keyDown);
-    head.innerText = "Round: " + currentRound;
-    rules.innerText = "Press space to start the round";
-}
-window.onload = start;
