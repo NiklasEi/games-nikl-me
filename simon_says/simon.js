@@ -116,3 +116,25 @@ function nextTile() {
     }
     setTimeout(nextTile, 1000);
 }
+
+function sendHighScore() {
+    const idHash = getUrlParameter("player");
+    if(!idHash) return;
+    const score = currentRound;
+    // Submit high score to Telegram
+    const xmlhttp = new XMLHttpRequest();
+    const url = "https://tg-bot.nikl.me/setgamescore";
+    xmlhttp.open("POST", url, true);
+    const data = {
+        "id_hash": idHash,
+        "high_score": score
+    };
+    xmlhttp.send(JSON.stringify(data));
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
