@@ -92,6 +92,7 @@ function lost() {
     ignoreInput = true;
     roundRunning = false;
     awaitInput = false;
+    sendHighScore();
 }
 
 function removeTransition(e) {
@@ -153,7 +154,7 @@ function sendHighScore() {
     xmlhttp.open("POST", url, true);
     const data = {
         "id_hash": idHash,
-        "high_score": score
+        "high_score": currentRound
     };
     xmlhttp.send(JSON.stringify(data));
 }
