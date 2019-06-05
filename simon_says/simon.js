@@ -13,25 +13,40 @@ function start() {
     tiles.forEach(tile => {
         tile.addEventListener('transitionend', removeTransition, false);
         tile.addEventListener('click', clickTile, false);
-        tile.addEventListener('touchend', clickTile, false);
+        tile.addEventListener('touch', clickTile, false);
     });
     window.addEventListener('keydown', keyDown, false);
     window.addEventListener('click', startRound, false);
-    window.addEventListener('touchend', startRound, false)
+    window.addEventListener('touch', startRound, false)
     head.innerText = "Round: " + currentRound;
     rules.innerText = "Click to start";
 }
 window.onload = start;
 
 function keyDown(e) {
-    const tile = document.querySelector(`.tile[data-key="${e.keyCode}"]`);
-    if(!tile) return;
-    clickTile.call(tile);
+    if( awaitInput && !ignoreInput ) {
+        const tile = document.querySelector(`.tile[data-key="${e.keyCode}"]`);
+        if(!tile) return;
+        clickTile.call(tile);
+    } else if (!roundRunning){
+        startNextRound();
+    }
 }
 
-function clickTile() {
+let handled = false;
+function clickTile(e) {
     if(!awaitInput || ignoreInput) return;
-    activateTile(this);
+    if (!e) {
+        // fired from keydown
+        activateTile(this);
+    } else if(e.type === "touch") {
+        handled = true;
+        activateTile(this);
+    } else if(e.type === "click" && !handled) {
+        activateTile(this);
+    } else {
+        handled = false;
+    }
 }
 
 function activateTile(element) {
@@ -54,7 +69,7 @@ function activateTile(element) {
                     currentTile = 0;
                     ignoreInput = false;
                 },
-                2000
+                1500
             )
         }
     }
@@ -84,8 +99,19 @@ function removeTransition(e) {
     this.classList.remove('clicked');
 }
 
-function startRound() {
+function startRound(e) {
     if(roundRunning || awaitInput || ignoreInput) return;
+    if(e.type === "touch") {
+        handled = true;
+        startNextRound();
+    } else if(e.type === "click" && !handled) {
+        startNextRound();
+    } else {
+        handled = false;
+    }
+}
+
+function startNextRound() {
     rules.innerText = "Remember the pattern";
     roundRunning = true;
     nextTile();
